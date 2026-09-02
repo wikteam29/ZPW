@@ -1,0 +1,8 @@
+repozytorium - folder w ktorym trzymamy pliki projektu
+git - system działający lokalnie
+github - strona do przechowywania repozytorium zdalnie
+commit - wprowadzenie zmian do brancha
+branch - tymczasowa kopia projektu do modyfikowania
+checkout - przeniesienie do konkretnego brancha
+merge - połączenie branchy nie usuwając starych
+rebase - połączenie branchy usuwając stare
