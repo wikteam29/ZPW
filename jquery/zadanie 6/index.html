@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+            $("li a").each(function(){
+                console.log("To element o id: " + this.id);
+            })
+
+            $("li").each(function(index, element){
+                console.log(index + ": " + $(this).text());
+            })
+
+            $("li").each(function(index, element){
+                console.log($(this).data("cena")); // int
+                //albo
+                console.log($(this).attr("data-cena")); // string
+            })
+        });
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        ul {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            color: #555;
+        }
+        li:last-child {
+            border-bottom: none;
+        }
+        li:hover {
+            color: #007bff;
+            font-weight: bold;
+        }
+        .link{
+            color: grey;
+            text-decoration: none;
+        }
+        .another_link{
+            background-color: black;
+        }    
+        .completely_different_link{
+            background-color: yellow;
+        
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lista gier komputerowych</h1>
+
+        <ul>
+            <li data-cena="25"><a href="#" id="1">The Witcher 3: Wild Hunt</a></li>
+            <li data-cena="250"><a href="#" id="2">Cyberpunk 2077</a></li>
+            <li data-cena="1908"><a href="#" id="3">Elden Ring</a></li>
+            <li data-cena="33"><a href="#" id="4">Baldur's Gate 3</a></li>
+            <li data-cena="777"><a href="#" id="5">Starfield</a></li>
+        </ul>
+    </div>
+</body>
+</html>
