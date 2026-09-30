@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .ch{
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            position: absolute;
+        }
+        .ch2{
+            width: 20px;
+            height: 20px;
+            background-color: green;
+            position: absolute;
+        }
+    </style>
+        <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+            //Object Event
+
+            $(document).on("keydown keyup keypress", function(){
+                $("#eventType").text(event.type);
+            })
+
+            $(document).on("mousemove", function(){
+                $("#pageX").text(event.pageX);
+                $("#pageY").text(event.pageY);
+            })
+
+            let pozX = 1;
+            let pozY = 1;
+            let speed = 10;
+
+            let japkoX = Math.floor((Math.random() * 1000) + 1);
+            let japkoY = Math.floor((Math.random() * 1000) + 1);
+
+            $("#japko").css({
+                "margin-left": japkoX + "px",
+                "margin-top": japkoY + "px"
+            })
+
+            $(document).on("keypress", function(){
+                if(event.key == "a"){
+                    pozX -= speed;
+                    $("#kwadrat").css("margin-left",pozX)
+                }else if(event.key == "d"){
+                    pozX += speed;
+                    $("#kwadrat").css("margin-left",pozX)
+                }else if(event.key == "w"){
+                    pozY -= speed;
+                    $("#kwadrat").css("margin-top",pozY)
+                }else if(event.key == "s"){
+                    pozY += speed;
+                    $("#kwadrat").css("margin-top",pozY)
+                }
+
+                if(pozX / pozY == japkoX / japkoY){
+                    $("#japko").style.display = none;
+                }
+            })
+
+            
+        });
+    </script>
+</head>
+<body>
+    <input type="text" id="pole">
+
+    <p>
+        Typ zdarzenia:
+        <span id="eventType">---</span>
+    </p>
+
+    <p>
+        Pozycja myszy:
+        x = <span id="pageX">---</span>
+        y = <span id="pageY">---</span>
+    </p>
+
+    <div class="ch" id="kwadrat"></div>
+
+    <div class="ch2" id="japko"></div>
+</body>
+</html>
