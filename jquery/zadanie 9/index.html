@@ -6,8 +6,8 @@
     <title>Document</title>
     <style>
         .ch{
-            width: 200px;
-            height: 200px;
+            width: 20px;
+            height: 20px;
             background-color: red;
             position: absolute;
         }
@@ -17,11 +17,57 @@
             background-color: green;
             position: absolute;
         }
+        #arena{
+            margin-left: 100px;
+            width: 1250px;
+            height: 500px;
+            border: solid black 3px;
+        }
     </style>
         <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
     <script>
         $(function(){
+            //KONIEC GRY
+            //JAK POWIEKSZY SIE PRZY BARIERZE TO WYCHODZI POZA NIĄ
+
+
             //Object Event
+            let kwX = 0;
+            let kwY = 0;
+            let jpX = 0;
+            let jpY = 0;
+
+            let $kw = $("#kwadrat");
+            let $jp = $("#japko");
+
+            let kwWidth = parseInt($kw.css("width"));
+            let kwHeight = parseInt($kw.css("height"));
+
+            let jpWidth = parseInt($jp.css("width"));
+            let jpHeight = parseInt($jp.css("height"));
+
+            function randomJapkoTeleport(){
+                jpX = Math.floor((Math.random() * 1230) + 20 - jpWidth);
+                jpY = Math.floor((Math.random() * 480) + 20 - jpHeight);
+
+                $jp.css({
+                    "margin-left": jpX + "px",
+                    "margin-top": jpY + "px"
+                })
+            }
+
+            function checkColision(kwX, kwY, jpX, jpY, kwWidth, kwHeight, jpWidth, jpHeight){
+                if(
+                    kwX < jpX + jpWidth &&
+                    kwX + kwWidth > jpX &&
+                    kwY < jpY + jpHeight &&
+                    kwY + kwHeight > jpY 
+                ){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
 
             $(document).on("keydown keyup keypress", function(){
                 $("#eventType").text(event.type);
@@ -32,35 +78,90 @@
                 $("#pageY").text(event.pageY);
             })
 
-            let pozX = 1;
-            let pozY = 1;
             let speed = 10;
+            let size = 20;
 
-            let japkoX = Math.floor((Math.random() * 1000) + 1);
-            let japkoY = Math.floor((Math.random() * 1000) + 1);
-
-            $("#japko").css({
-                "margin-left": japkoX + "px",
-                "margin-top": japkoY + "px"
-            })
+            
+            randomJapkoTeleport();
+            console.log(jpX + jpY);
 
             $(document).on("keypress", function(){
-                if(event.key == "a"){
-                    pozX -= speed;
-                    $("#kwadrat").css("margin-left",pozX)
-                }else if(event.key == "d"){
-                    pozX += speed;
-                    $("#kwadrat").css("margin-left",pozX)
-                }else if(event.key == "w"){
-                    pozY -= speed;
-                    $("#kwadrat").css("margin-top",pozY)
-                }else if(event.key == "s"){
-                    pozY += speed;
-                    $("#kwadrat").css("margin-top",pozY)
+                switch(event.key){
+                    case "a":
+                        if(kwX - speed < 0){
+                            kwX = 0;
+                            $kw.css("margin-left",kwX)
+                        }else{
+                            kwX -= speed;
+                            $kw.css("margin-left",kwX);
+                        }
+                        break;
+                    case "d":
+                        if(kwX + speed > 1250 - kwWidth){
+                            kwX = 1250 - kwWidth;
+                            $kw.css("margin-left",kwX)
+                        }else{
+                            kwX += speed;
+                            $kw.css("margin-left",kwX);
+                        }
+                        break;
+                    case "w":
+                        if(kwY - speed < 0){
+                            kwY = 0;
+                            $kw.css("margin-top",kwY)
+                        }else{
+                            kwY -= speed;
+                            $kw.css("margin-top",kwY);
+                        }
+                        break;
+                    case "s":
+                        if(kwY + speed > 500 - kwHeight){
+                            kwY = 500 - kwHeight;
+                            $kw.css("margin-top",kwY)
+                        }else{
+                            kwY += speed;
+                            $kw.css("margin-top",kwY);
+                        }
+                        break;
                 }
 
-                if(pozX / pozY == japkoX / japkoY){
-                    $("#japko").style.display = none;
+                if(checkColision(kwX, kwY, jpX, jpY, kwWidth, kwHeight, jpWidth, jpHeight)){
+                    speed += 5;
+                    size += 10;
+
+                    let kwXT = kwX;
+                    let kwYT = kwY;
+
+                    $kw.css({
+                        "width": size + "px",
+                        "height": size + "px",
+                    });
+                    kwWidth = parseInt($kw.css("width"));
+                    kwHeight = parseInt($kw.css("height"));
+
+                    if(kwX == 0){
+                        kwX = 0;
+                        $kw.css("margin-left",kwX)
+                    }
+                    if(kwX == 1250 - kwWidth){
+                        kwX = 1250 - kwWidth;
+                        $kw.css("margin-left",kwX)
+                    }
+
+                    if(kwY == 0){
+                        kwY = 0;
+                        $kw.css("margin-top",kwY)
+                    }
+                    if(kwY == 1250 - kwHeight){
+                        kwY = 1250 - kwHeight;
+                        $kw.css("margin-top",kwY)
+                    }
+
+
+                    randomJapkoTeleport();
+                    while(checkColision(kwX, kwY, jpX, jpY, kwWidth, kwHeight, jpWidth, jpHeight)){
+                        randomJapkoTeleport();
+                    }
                 }
             })
 
@@ -82,8 +183,10 @@
         y = <span id="pageY">---</span>
     </p>
 
-    <div class="ch" id="kwadrat"></div>
+    <div id="arena">
+        <div class="ch" id="kwadrat"></div>
 
-    <div class="ch2" id="japko"></div>
+        <div class="ch2" id="japko"></div>
+    </div>
 </body>
 </html>
