@@ -27,10 +27,6 @@
         <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
     <script>
         $(function(){
-            //KONIEC GRY
-            //JAK POWIEKSZY SIE PRZY BARIERZE TO WYCHODZI POZA NIĄ
-
-
             //Object Event
             let kwX = 0;
             let kwY = 0;
@@ -51,8 +47,8 @@
                 jpY = Math.floor((Math.random() * 480) + 20 - jpHeight);
 
                 $jp.css({
-                    "margin-left": jpX + "px",
-                    "margin-top": jpY + "px"
+                    "margin-left": jpX,
+                    "margin-top": jpY
                 })
             }
 
@@ -79,11 +75,8 @@
             })
 
             let speed = 10;
-            let size = 20;
 
-            
             randomJapkoTeleport();
-            console.log(jpX + jpY);
 
             $(document).on("keypress", function(){
                 switch(event.key){
@@ -126,41 +119,57 @@
                 }
 
                 if(checkColision(kwX, kwY, jpX, jpY, kwWidth, kwHeight, jpWidth, jpHeight)){
-                    speed += 5;
-                    size += 10;
-
-                    let kwXT = kwX;
-                    let kwYT = kwY;
+  
+                    if(speed + kwWidth > 1250){
+                        speed = 1250 - kwWidth;
+                    }else if(speed < 50){
+                        speed += 5; 
+                    }
+                    if(kwHeight < 500){
+                        kwHeight += 10;
+                    }
+                    if(kwWidth < 1250){
+                        kwWidth += 10;
+                    }
 
                     $kw.css({
-                        "width": size + "px",
-                        "height": size + "px",
+                        "width": kwWidth,
+                        "height": kwHeight
                     });
                     kwWidth = parseInt($kw.css("width"));
                     kwHeight = parseInt($kw.css("height"));
 
-                    if(kwX == 0){
-                        kwX = 0;
-                        $kw.css("margin-left",kwX)
-                    }
-                    if(kwX == 1250 - kwWidth){
+                    if(kwX + kwWidth > 1250){
                         kwX = 1250 - kwWidth;
                         $kw.css("margin-left",kwX)
                     }
 
-                    if(kwY == 0){
-                        kwY = 0;
-                        $kw.css("margin-top",kwY)
-                    }
-                    if(kwY == 1250 - kwHeight){
-                        kwY = 1250 - kwHeight;
+                    if(kwY + kwHeight > 500){
+                        kwY = 500 - kwHeight;
                         $kw.css("margin-top",kwY)
                     }
 
 
                     randomJapkoTeleport();
-                    while(checkColision(kwX, kwY, jpX, jpY, kwWidth, kwHeight, jpWidth, jpHeight)){
-                        randomJapkoTeleport();
+                    if(kwWidth > 1220){
+                        kwWidth = 20;
+                        kwHeight = 20;
+                        speed = 10;
+                        kwX = 0;
+                        kwY = 0;
+                        $kw.css({
+                            "width": kwWidth,
+                            "height": kwHeight,
+                            "margin-left": kwX,
+                            "margin-top": kwY
+                        });
+                        alert("WYGRAŁEŚ!!! \n ŚŻK!!!!");
+                        return false;
+                    }else{
+                        console.log(kwWidth);
+                        while(checkColision(kwX, kwY, jpX, jpY, kwWidth, kwHeight, jpWidth, jpHeight)){
+                            randomJapkoTeleport();
+                        }
                     }
                 }
             })
