@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    </style>
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+            let kardsNumber = 0;
+
+            $("#add").click(function(){
+                let div = document.createElement("div");
+
+                let backgroundR = Math.floor(Math.random() * 255);
+                let backgroundG = Math.floor(Math.random() * 255);
+                let backgroundB = Math.floor(Math.random() * 255);
+                let number = Math.floor((Math.random() * 99) + 1);
+                let width = Math.floor((Math.random() * 150) + 100);
+                let height = Math.floor((Math.random() * 150) + 100);
+
+                $(div).css({
+                    "background-color":`rgb(${backgroundR}, ${backgroundG}, ${backgroundB})`,
+                    "width":width,
+                    "height":height
+                })
+
+                $(div).text(number);
+                $(div).addClass("karta");
+
+                $("#container").append(div);
+                kardsNumber++;
+                $("#kardsNumber").text(`Utworzone kart: ${kardsNumber}`);
+            })
+
+            $("#delete").click(function(){
+                $(".karta").each(function(){
+                    $(this).remove();
+                })
+                kardsNumber = 0;
+                $("#kardsNumber").text(`Utworzone kart: ${kardsNumber}`);
+            })
+
+            $("#container").on("click", ".karta", (function(){
+                if($(this).text() % 2 == 0){
+                    $(this).css("background-color","blue");
+                }else if($(this).text() % 2 == 1){
+                    $(this).css("background-color","red");
+                }
+            }))
+
+            $("#container").on("dblclick", ".karta", (function(){
+                $(this).remove();
+                kardsNumber--;
+                $("#kardsNumber").text(`Utworzone kart: ${kardsNumber}`);
+            }))
+        });
+    </script>
+</head>
+<body>
+    <div id="container">
+        <button id="add">Dodaj kartę</button>
+        <button id="delete">Usuń wszystkiw</button>
+        <p id="kardsNumber">Utworzone karty: </p>
+
+    
+
+    </div>
+</body>
+</html>
