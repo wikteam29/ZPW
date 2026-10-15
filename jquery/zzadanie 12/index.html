@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+    </style>
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+            let pytanie = 1;
+            $("#nastepne").click(function(){
+                if(pytanie < 3){
+                    pytanie++;
+                }
+
+                if(pytanie == 1){
+                    $("#pytanie1").show();
+                    $("#pytanie2").hide();
+                    $("#pytanie3").hide();
+                }
+                if(pytanie == 2){
+                    $("#pytanie1").hide();
+                    $("#pytanie2").show();
+                    $("#pytanie3").hide();
+                }
+                if(pytanie == 3){
+                    $("#pytanie1").hide();
+                    $("#pytanie2").hide();
+                    $("#pytanie3").show();
+                }
+            })
+            $("#powrot").click(function(){
+                if(pytanie > 1){
+                    pytanie--;
+                }
+
+                if(pytanie == 1){
+                    $("#pytanie1").show();
+                    $("#pytanie2").hide();
+                    $("#pytanie3").hide();
+                }
+                if(pytanie == 2){
+                    $("#pytanie1").hide();
+                    $("#pytanie2").show();
+                    $("#pytanie3").hide();
+                }
+                if(pytanie == 3){
+                    $("#pytanie1").hide();
+                    $("#pytanie2").hide();
+                    $("#pytanie3").show();
+                }
+            })
+
+            let wynik1 =  "Kanada posiada 9,984,670 kilometrów kwadratowych"
+            let wynik2 =  "Bo centyle"
+            let wynik3 =  "Bo 4"
+            let wynik = "";
+
+            $("#sprawdz").click(function(){
+                switch(pytanie){
+                    case 1:
+                        wynik = wynik1;
+                        break;
+                    case 2:
+                        wynik = wynik2;
+                        break;
+                    case 3:
+                        wynik = wynik3;
+                        break;
+                }
+
+                if($(`input[name='odpowiedz${pytanie}']:checked`).length === 0){
+                    return;
+                }
+
+                if($(`input[name='odpowiedz${pytanie}']:checked`).attr("id") == `dobra${pytanie}`){
+                    $(`#wynik${pytanie}`).text("Dobra odpowiedz. " + wynik);
+                    $(`#dobra${pytanie}`).parent().css("background-color","green");
+                }else{
+                    $(`#wynik${pytanie}`).text("Zła odpowiedz." + wynik);
+                    $(`input[name='odpowiedz${pytanie}']:checked`).parent().css("background-color","red")
+                    $(`#dobra${pytanie}`).parent().css("background-color","green");
+                }
+            })
+        });
+    </script>
+</head>
+<body>
+    <div id="pytanie1">
+        <p>Pytanie 1. Jakie jest drugie największe państwo na świecie?</p>
+        <label><input type="radio" name="odpowiedz1">Rosja</label><br>
+        <label><input type="radio" name="odpowiedz1" id="dobra1">Kanada</label><br>
+        <label><input type="radio" name="odpowiedz1">Polska</label><br>
+        <label><input type="radio" name="odpowiedz1">Uzbekistan</label>
+        <p id="wynik1"></p>
+    </div>
+
+    <div id="pytanie2" hidden>
+        <p>Pytanie 2. Ile</p>
+        <label><input type="radio" name="odpowiedz2">Tyle</input></label><br>
+        <label><input type="radio" name="odpowiedz2">Wentyle</input></label><br>
+        <label><input type="radio" name="odpowiedz2" id="dobra2">Centyle</input></label><br>
+        <label><input type="radio" name="odpowiedz2">Dwa szpile</input></label>
+        <p id="wynik2"></p>
+    </div>
+
+    <div id="pytanie3" hidden>
+        <p>Pytanie 3. Nie mam pomysłu na pytanie</p>
+        <label><input type="radio" name="odpowiedz3">1</input></label><br>
+        <label><input type="radio" name="odpowiedz3">2</input></label><br>
+        <label><input type="radio" name="odpowiedz3">3</input></label><br>
+        <label><input type="radio" name="odpowiedz3" id="dobra3">4</input></label>
+        <p id="wynik3"></p>
+    </div>
+
+    <br><button id="sprawdz">sprawdz</button><br><hr>
+
+    <button id="powrot">powrót</button>
+    <button id="nastepne">następne</button>
+</body>
+</html>
