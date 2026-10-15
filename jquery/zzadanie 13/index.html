@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    </style>
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+            $("#formularz").submit(function(e){
+                e.preventDefault();
+                if($("#nick").val() === ""){
+                    $("#info").text("Podaj nick");
+                }else{
+                    $("#info").text(`Witaj ${$("#nick").val()}`);
+                }
+            })
+
+            $("#formularz2").submit(function(e){
+                e.preventDefault();
+
+                if($("#email").val() === "" || $("#haslo").val() === ""){
+                    $("#info2").text("Podaj poprawne dane");
+                    $("#info2").css("background-color","red")
+                }else{
+                    if($("#haslo").val().length < 6){
+                        $("#info2").text("Hasło musi mieć conajmniej 6 znaków");
+                        $("#info2").css("background-color","red")
+                    }else{
+                        $("#info2").text(`Zalogowano`);
+                        $("#info2").css("background-color","green")
+                    }
+                }
+            })
+        });
+    </script>
+</head>
+<body>
+    <form id="formularz">
+        <input type="text" id="nick">
+        <button type="submit">Wyślij</button>
+    </form>
+    <p id="info"></p>
+    <hr>
+    <form id="formularz2">
+        <input type="text" id="email">
+        <input type="text" id="haslo">
+        <button type="submit">Wyślij</button>
+    </form>
+    <p id="info2"></p>
+</body>
+</html>
