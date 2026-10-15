@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #schowajDiv{
+            background-color: blue;
+            width: 100px;
+            height: 100px;
+        }
+        #schowaj2Div{
+            background-color: red;
+            width: 100px;
+            height: 100px;
+        }
+
+        #slidujDiv{
+            background-color: yellow;
+            width: 100px;
+            height: 100px;
+        }
+        #sliduj2Div{
+            background-color: green;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+            let schowany = false;
+            $("#schowajPrzycisk").click(function(){
+                if(!schowany){
+                    $("#schowajDiv").hide();
+                    schowany = true;
+                }else{
+                    $("#schowajDiv").show();
+                    schowany = false;
+                }
+            })
+
+            $("#schowaj2Przycisk").click(function(){
+                $("#schowaj2Div").toggle();
+            })
+
+            let slidowany = false;
+            $("#slidujPrzycisk").click(function(){
+                if(!schowany){
+                    $("#slidujDiv").slideUp();
+                    schowany = true;
+                }else{
+                    $("#slidujDiv").slideDown();
+                    schowany = false;
+                }
+            })
+
+            $("#sliduj2Przycisk").click(function(){
+                $("#sliduj2Div").slideToggle();
+            })
+        });
+    </script>
+</head>
+<body>
+    <p>Chowaj hide i show (trzeba sprawdzać stan ifem)</p>
+    <div id="schowajDiv"></div>
+    <button id="schowajPrzycisk">schowaj lub pojaw div</button>
+
+    <hr>
+
+    <p>Chowaj toggle (sprawdza stan samo)</p>
+    <div id="schowaj2Div"></div>
+    <button id="schowaj2Przycisk">schowaj lub pojaw ten drugi div</button>
+
+    <hr>
+
+    <p>Sliduj slideUp i slideDown (trzeba sprawdzać stan ifem)</p>
+    <div id="slidujDiv"></div>
+    <button id="slidujPrzycisk">sliduj div</button>
+
+    <hr>
+
+    <p>Sliduj slideToggle (sprawdza stan samo)</p>
+    <div id="sliduj2Div"></div>
+    <button id="sliduj2Przycisk">sliduj ten drugi div</button>
+</body>
+</html>
