@@ -20,10 +20,31 @@
             $("#formularz").submit(function(e){
                 e.preventDefault();
                 let nazwisko = $("#nazwisko").val().trim();
+
                 if(nazwisko === "") 
                     $("#wynik").text("Pole nazwisko jest wymagane").css("color", "red");
                 else 
                     $("#wynik").text("Wysłano formularz").css("color", "green");
+            })
+
+            $("#sprawdzWiek").click(function(){
+                let wiek = Number($("#wiek").val());
+                if(isNaN(wiek))
+                    $("#bladWiek").text("Wiek musi być liczbą");
+                else
+                    $("#bladWiek").text(`Masz ${wiek} lat`);
+            })
+
+            $("#save").click(function(){
+                let ocena = Number($("#ocena").val());
+                if(isNaN(ocena))
+                    $("#bladOcena").text("To nie jest liczba");
+                else if(ocena < 1 || ocena > 6)
+                    $("#bladOcena").text("Ocena musi być z zakresu 1-6");
+                else if(!Number.isInteger(ocena))
+                    $("#bladOcena").text("Ocena musi być liczbą całkowitą");
+                else
+                    $("#bladOcena").text(`Zapisano ocenę: ${ocena}`);
             })
         });
     </script>
@@ -40,5 +61,14 @@
         <button type="submit">Wyślij</button>
     </form>
     <p id="wynik"></p>
+    <hr>
+    <input type="text" id="wiek">
+    <button id="sprawdzWiek">Sprawdź</button>
+    <p id="bladWiek"></p>
+    <hr>
+
+    <input type="text" id="ocena">
+    <button id="save">Zapisz</button>
+    <p id="bladOcena"></p>
 </body>
 </html>
