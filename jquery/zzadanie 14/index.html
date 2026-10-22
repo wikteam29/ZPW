@@ -17,8 +17,10 @@
             })
 
             $("#newsletter").change(function(){
-                if($(this).is(":checked") /*lub this.checked*/) $("#stan").text("Zapisano do newslettera");
-                else $("#stan").text("Wypisano z newslettera");
+                if($(this).is(":checked") /*lub this.checked*/) 
+                    $("#stan").text("Zapisano do newslettera");
+                else 
+                    $("#stan").text("Wypisano z newslettera");
             })
 
             $("#butt").change(function(){
@@ -42,8 +44,10 @@
             $("#komentarz").on("input", function(){
                 let zostalo = $(this).prop("maxlength") - $(this).val().length;
 
-                if(zostalo <= 10) $("#licznik").css("color", "red")
-                else $("#licznik").css("color", "black"); 
+                if(zostalo <= 10) 
+                    $("#licznik").css("color", "red")
+                else 
+                    $("#licznik").css("color", "black"); 
 
                 $("#licznik").text(`Pozostało ${zostalo} znaków`);
             })

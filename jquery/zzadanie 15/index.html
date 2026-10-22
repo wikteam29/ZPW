@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    </style>
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+            $("#sprawdz").click(function(){
+                let imie = $("#imie").val().trim();
+                if(imie === "") 
+                    $("#blad").text("Pole imie jest wymagane");
+                else 
+                    $("#blad").text(`Twoje imię to: ${imie}`)
+            })
+
+            $("#formularz").submit(function(e){
+                e.preventDefault();
+                let nazwisko = $("#nazwisko").val().trim();
+                if(nazwisko === "") 
+                    $("#wynik").text("Pole nazwisko jest wymagane").css("color", "red");
+                else 
+                    $("#wynik").text("Wysłano formularz").css("color", "green");
+            })
+        });
+    </script>
+</head>
+<body>
+    <input type="text" id="imie">
+    <button id="sprawdz">Sprawdź</button>
+    <p id="blad"></p>
+    <hr>
+
+    <form id="formularz">
+        <label>Nazwisko</label>
+        <input id="nazwisko">
+        <button type="submit">Wyślij</button>
+    </form>
+    <p id="wynik"></p>
+</body>
+</html>
