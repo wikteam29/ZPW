@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .slabe{
+            background-color: red;
+        }
+        .srednie{
+            background-color: orange;
+        }
+        .silne{
+            background-color: green;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+            $(document).on("keydown", function(){
+                if(event.key == "Enter"){
+                    let text = $("#szukaj").val().trim();
+
+                    if(text === ""){
+                        $("#wynik").text("Wpisz frazę!").css("color", "red");
+                    }else{
+                        $("#wynik").text(text);
+                    }
+                }else if(event.key == "Escape"){
+                    $("#szukaj").val("");
+                    $("#wynik").text("");
+                }
+            })
+
+            $("#haslo").on("input", function(){
+                let len = $(this).val().length;
+
+                if(len < 6){
+                    $("#sila").text("Słabe").removeClass().addClass("slabe");
+                }else if(len >= 6 && len <= 9){
+                    $("#sila").text("Średnie").removeClass().addClass("srednie");
+                }else if(len > 9){
+                    $("#sila").text("Silne").removeClass().addClass("silne");
+                }
+            })
+
+            $("#logowanie").submit(function(e){
+                e.preventDefault();
+
+                let login = $("#login").val().trim();
+                let pass = $("#pass").val().trim();
+
+                if(login === ""){
+                    $("#info").text("Podaj login");
+                }else if(pass.length < 6){
+                    $("#info").text("Hasło za krótkie");
+                }else{
+                    $("#info").text(`Witaj, ${login}`).css("color", "green");
+                }
+            })
+
+            $("#rozmiar").change(function(){
+                let r = $(this).val();
+                $("#tekst").html(`Przykładowy tekst akapitu. <br> Aktualny rozmiar: ${r} px`).css("font-size", `${r}px`);
+            })
+
+
+
+            let suma = 20;
+            $(".dodatek").change(function(){
+                if($(this).prop("checked")){
+                    suma += Number($(this).val());
+                }else{
+                    suma -= Number($(this).val());
+                }
+                $("#suma").text(suma);
+            })
+            $("#akcept").change(function(){
+                $("#zamow").prop("disabled", !$(this).prop("checked"));
+            })
+            
+            $("#licz").click(function(){
+                let waga = $("#waga").val().trim();
+                let wzrost = $("#wzrost").val().trim();
+
+                if(waga === "" || wzrost === ""){
+                    $("#bmi").text("Pola nie mogą być puste!").css("color", "red");
+                }else if(isNaN(waga) || isNaN(wzrost)){
+                    $("#bmi").text("Pola muszą być liczbami!").css("color", "red");
+                }else if(waga <= 20 || waga >= 300){
+                    $("#bmi").text("Waga musi być w zakresie 20-300!").css("color", "red");
+                }else if(wzrost <= 100 || wzrost >= 250){
+                    $("#bmi").text("Wzrost musi być w zakresie 100-250!").css("color", "red");
+                }else{
+                    let wynik = waga / ((wzrost/100)*(wzrost/100));
+                    wynik = wynik.toFixed(1);
+                    $("#bmi").text(`Wynik BMI: ${wynik}`).css("color","black");
+                }
+            })
+        });
+    </script>
+</head>
+<body>
+    <input type="text" id="szukaj" placeholder="Szukaj...">
+    <p id="wynik"></p>
+    <hr>
+
+
+    <input type="password" id="haslo">
+    <p id="sila"></p>
+    <hr>
+
+    <form id="logowanie">
+    <input type="text" id="login" placeholder="Login">
+    <input type="password" id="pass" placeholder="Hasło">
+    <button type="submit">Zaloguj</button>
+    </form>
+    <hr>
+
+    <select id="rozmiar">
+        <option value="14">Mały</option>
+        <option value="20">Średni</option>
+        <option value="28">Duży</option>
+    </select>
+    <p id="tekst">Przykładowy tekst akapitu.</p>
+    <hr>
+
+    <label><input type="checkbox" class="dodatek" value="3"> Ser (3 zł)</label>
+    <label><input type="checkbox" class="dodatek" value="5"> Szynka (5 zł)</label>
+    <label><input type="checkbox" class="dodatek" value="4"> Pieczarki (4 zł)</label>
+    <p>Cena: <span id="suma">20</span> zł</p>
+    <label><input type="checkbox" id="akcept"> Potwierdzam zamówienie</label>
+    <button id="zamow" disabled>Zamów</button>
+    <hr>
+
+    <input type="text" id="waga" placeholder="Waga (kg)">
+    <input type="text" id="wzrost" placeholder="Wzrost (cm)">
+    <button id="licz">Oblicz</button>
+    <p id="bmi"></p>
+
+</body>
+</html>
