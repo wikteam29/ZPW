@@ -1,0 +1,106 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Poprawa jQuery – Grupa B</title>
+<script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao="
+  crossorigin="anonymous">
+</script>
+<script>
+    $(function(){
+        $("#sklep").css({
+            "background-color":"honeydew",
+            "padding":"15px"
+        });
+        $("[href='#']").attr("href", "https://pl.wikipedia.org/wiki/Warzywo");
+
+        $("a").even().css({"background-color":"darkgreen", "color":"whtie"});
+        $("#promo").addClass("wyroznione");
+        $("li").eq(4).css("font-size","120%");
+
+        console.log($("li").first().text() + "    " + $("ul").html());
+        $("h1").append("- świeże produkty");
+
+        $("ul").prepend($("li").eq(3)).append("<li>Cebula</li>");
+        
+        $("#dodaj").click(function(){
+            let produkt = $("#produkt").val();
+            let ilosc = $("#ilosc").val();
+
+            if(produkt == "" || ilosc == ""){
+                $("#komunikat").text("Podaj produkt i ilość!");
+            }else{
+                $("ul").append(`<li class='dodany'>${produkt} - ${ilosc} kg</li>`)
+                $("#komunikat").text("");
+                $("#produkt").val("");
+                $("#ilosc").val("");
+            }
+        })
+
+        $("#naDol").click(function(){
+            $("ul").append($("li").first());
+        })
+
+        let licznik = 0;
+
+        $("#koszyk").click(function(){
+            licznik++;
+            $("#sztuki").text(`W koszyku: ${licznik}`);
+            if(licznik >= 10){
+                $(this).addClass("pelny");
+            }
+        })
+        $("#oproznij").click(function(){
+            licznik = 0;
+            $("#sztuki").text(`W koszyku: ${licznik}`);
+            $("#koszyk").removeClass("pelny");
+        })
+
+        $("#dostawa").change(function(){
+            $("#zamow").prop("disabled", !$(this).prop("checked"))
+        })
+
+        $("#zamow").click(function(){
+            alert("Zamowienie wysłane!");
+        })
+    });
+</script>
+<style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: 30px auto; }
+    li { padding: 6px 0; }
+    #koszyk { width: 120px; height: 120px; background-color: wheat; }
+    .wyroznione { font-weight: bold; border-left: 5px solid orange; padding-left: 8px; }
+    .dodany { color: teal; font-style: italic; }
+    .pelny { background-color: tomato; border: 4px solid darkred; }
+</style>
+</head>
+<body>
+<div id="sklep">
+  <h1>Warzywniak</h1>
+  <ul id="produkty">
+    <li id="promo"><a href="#">Jabłka</a></li>
+    <li><a href="#">Gruszki</a></li>
+    <li><a href="#">Marchew</a></li>
+    <li><a href="#">Ziemniaki</a></li>
+    <li><a href="#">Pomidory</a></li>
+    <li><a href="#">Ogórki</a></li>
+  </ul>
+</div>
+
+<hr>
+<input type="text" id="produkt" placeholder="Nazwa produktu">
+<input type="number" id="ilosc" placeholder="Ilość (kg)">
+<button id="dodaj">Dodaj produkt</button>
+<button id="naDol">Pierwszy na dół</button>
+<p id="komunikat"></p>
+
+<hr>
+<div id="koszyk"></div>
+<p id="sztuki">W koszyku: 0</p>
+<button id="oproznij">Opróżnij</button>
+
+<hr>
+<input type="checkbox" id="dostawa">
+<label for="dostawa">Zamawiam z dostawą do domu</label>
+<button id="zamow" disabled>Zamów</button>
+</body>
+</html>
